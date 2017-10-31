@@ -6,8 +6,6 @@ using UnityEngine;
 public class MicInput : MonoBehaviour {
 
     public float sensitivity = 100;
-    public float loudness1 = 0;
-    public float loudness2 = 0;
     public GameObject target;
 
     private int sampleRate;
@@ -15,7 +13,8 @@ public class MicInput : MonoBehaviour {
     private const int ccsize = 2047; //2*numSamples-1 CrossCorrelationSize
 
     float[] _samples1, _samples2;
-
+    float loudness1 = 0;
+    float loudness2 = 0;
 
     AudioSource aud1, aud2;
 
