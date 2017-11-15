@@ -11,14 +11,18 @@ using UnityEngine;
 
 public class MicInput : MonoBehaviour {
     AudioSource aud1, aud2;
-    int signalLength = 3200;
-    public float[] _samples1 = new float[3200];
-    public float[] _samples2 = new float[3200];
-    public double[] _newSamples1 = new double[3200];
-    public double[] gcccorrelation = new double[(3200 * 2) - 1];
+    int signalLength = 256;
+    public float[] _samples1 = new float[256];
+    public float[] _samples2 = new float[256];
+
+    public double[] _samples1d = new double[256];
+    public double[] _samples2d = new double[256];
+
+    public double[] _newSamples1 = new double[256];
+    public double[] gcccorrelation = new double[(256 * 2) - 1];
     //public double[] _newSamples2 = new double[512];
 
-    public float[] cc2 = new float[9];
+    public float[] cc2 = new float[(256 * 2) - 1];
 
     public double[] dft = new double[5];
 
@@ -27,17 +31,18 @@ public class MicInput : MonoBehaviour {
     // Use this for initialization
     void Start ()
     {
-		//foreach (string device in Microphone.devices)
-  //      {
-  //          Debug.Log(device);
-  //      }
+        foreach (string device in Microphone.devices)
+        {
+            Debug.Log(device);
+            //Debug.Log(Microphone.devices[3]);
+        }
         aud1 = GetComponent<AudioSource>();
-        aud1.clip = Microphone.Start(Microphone.devices[3], true, 1, 16000);
+        aud1.clip = Microphone.Start(Microphone.devices[1], true, 1, 16000);
         aud1.loop = true;
         aud1.mute = false;
 
         aud2 = GetComponent<AudioSource>();
-        aud2.clip = Microphone.Start(Microphone.devices[4], true, 1, 16000);
+        aud2.clip = Microphone.Start(Microphone.devices[3], true, 1, 16000);
         aud2.loop = true;
         aud2.mute = false;
 
@@ -53,9 +58,10 @@ public class MicInput : MonoBehaviour {
 	void Update () {
         //var isSamplePos = false;
         aud1.clip.GetData(_samples1, 0);
-        aud1.clip.GetData(_samples2, 1);
+        aud2.clip.GetData(_samples2, 1);
 
-        
+        //_samples1d = Array.ConvertAll(_samples1, x => (double)x);
+        //_samples2d = Array.ConvertAll(_samples2, x => (double)x);
 
         cc2 = MyCrossCorr(_samples1, _samples2);
 
@@ -68,13 +74,13 @@ public class MicInput : MonoBehaviour {
         double[] gcc = new double[(signalLength * 2) - 1];
         for (int i = 0, j = 0; i < gccLen; i++)
         {
-            gcc[i] = dft[i] / absDFT[j]; 
+            gcc[i] = dft[i] / absDFT[j];
             if ((i % 2 == 0) && (i != 0))
             {
                 j = j + 1;
             }
         }
-        
+
         gcccorrelation = IFFT(gcc);
         for (int i = 0, j = 0; i < gccLen; i++)
         {
@@ -83,7 +89,7 @@ public class MicInput : MonoBehaviour {
 
         var indexAtMax = gcccorrelation.ToList().IndexOf(gcccorrelation.Max());
 
-        int gccEstimation = 3200 - indexAtMax;
+        int gccEstimation = 256 - indexAtMax;
 
         gcoco = ((gccEstimation + 10) * 180) / 20;
 
@@ -209,17 +215,19 @@ public class MicInput : MonoBehaviour {
             }
             else
             {
-                jmax = lx -1;
+                jmax = lx - 1;
             }
 
             for (int j = jmin; j <= jmax; j++)
             {
                 index = ly - i + j - 1;
                 z[i] = z[i] + (arr1[j] * arr2[index]);
-                
+
             }
         }
         //Debug.Log(z);
+        //var z = IFFT(FFT(arr1, true) * FFT(arr2, true));
+
         return z;
     }
 }
