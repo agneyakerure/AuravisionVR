@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/Scenes/Audio Test 1.unity
+- path: Assets/MicControl3/example_Optional/MicControl_example_timeScale_average_Loudness.unity
   isLoaded: 1
   isActive: 1

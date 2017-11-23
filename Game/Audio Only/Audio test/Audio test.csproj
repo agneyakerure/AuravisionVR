@@ -222,8 +222,25 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\MicControl3\example_Optional\example_data\etc\nextScene.cs" />
+    <Compile Include="Assets\MicControl3\example_Optional\example_data\etc\resetTime.cs" />
+    <Compile Include="Assets\MicControl3\Reference\Call_Loudness.cs" />
+    <Compile Include="Assets\MicControl3\Reference\Call_SpectrumData.cs" />
+    <Compile Include="Assets\MicControl3\Reference\Frame_average_Loudness.cs" />
+    <Compile Include="Assets\MicControl3\Reference\LightIntensity_Loudness.cs" />
+    <Compile Include="Assets\MicControl3\Reference\Scale_SpectrumData.cs" />
+    <Compile Include="Assets\MicControl3\Reference\timeScale_average_Loudness.cs" />
+    <Compile Include="Assets\MicControl3\Reference\timeScale_Loudness.cs" />
+    <Compile Include="Assets\MicControl3\Reference\UI_devices_dropdown_list.cs" />
+    <Compile Include="Assets\MicControl3\Source\Code\MicControlC.cs" />
     <Compile Include="Assets\Scripts\Interop.cs" />
     <Compile Include="Assets\Scripts\MicInput.cs" />
+    <Compile Include="Assets\Scripts\MicInput1.cs" />
+    <Compile Include="Assets\Scripts\NewMicInput.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\MicControl3\ReadMe_Documentation.txt" />
+    <None Include="Assets\MicControl3\UpdateLog.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />
